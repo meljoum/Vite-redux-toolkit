@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import { useAppDispatch, useAppSelector } from './app/hooks'
 import { amountAdded, decremented, incremented } from './featuers/counter/counterSlice'
 import './App.css'
+import { useState } from 'react'
 
 function App() {
   //*const [count, setCount] = useState(0)
@@ -15,6 +16,9 @@ function App() {
   const count =  useAppSelector((state) => state.counter.value)
   const dispatch = useAppDispatch();
 
+  const [incrementAmount, setIncrementAmount] = useState('2')
+  const incrementValue = Number(incrementAmount) || 0
+
   function handleIncrementCounter() {
     dispatch(incremented());
   }
@@ -25,11 +29,11 @@ function App() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handleChange(e: any) {
-    e.target.value
+    setIncrementAmount(e.target.value)
   }
 
   function handleAmountAdded() {
-    dispatch(amountAdded(3));
+    dispatch(amountAdded(incrementValue));
   }
 
   return (
@@ -46,7 +50,7 @@ function App() {
       <div className="card">
         <button onClick={handleIncrementCounter}> + </button>
         <div className="input-txt h-8 w-1/2 my-auto mx-2">
-          <input type="number" onChange={handleChange} name="" id="" />
+          <input type="number" value={incrementAmount} onChange={handleChange} name="" id="" />
         </div>
         <p>The count is : {count}</p>
         <button onClick={handleDecrementedCounter}> - </button>
