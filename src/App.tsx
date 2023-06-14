@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks'
 import { amountAdded, decremented, incremented } from './featuers/counter/counterSlice'
 import './App.css'
 import { useState } from 'react'
+import { incrementBlog } from './featuers/blog/blogSlice'
 
 function App() {
   //*const [count, setCount] = useState(0)
@@ -14,6 +15,7 @@ function App() {
 
   // we get the state from redux
   const count =  useAppSelector((state) => state.counter.value)
+  const blogFive = useAppSelector((state) => state.blog.num) 
   const dispatch = useAppDispatch();
 
   const [incrementAmount, setIncrementAmount] = useState('2')
@@ -36,6 +38,11 @@ function App() {
     dispatch(amountAdded(incrementValue));
   }
 
+  //blog
+  function addBlogNum() {
+    dispatch(incrementBlog());
+  }
+
   return (
     <>
       <div>
@@ -49,12 +56,17 @@ function App() {
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={handleIncrementCounter}> + </button>
+        <button onClick={handleDecrementedCounter}> - </button>
         <div className="input-txt h-8 w-1/2 my-auto mx-2">
           <input type="number" value={incrementAmount} onChange={handleChange} name="" id="" />
         </div>
         <p>The count is : {count}</p>
-        <button onClick={handleDecrementedCounter}> - </button>
+        
         <button onClick={handleAmountAdded}>Amount Added</button>
+
+        <h1>Blog Reducer</h1>
+        <button onClick={addBlogNum}>+ 5</button>
+        <p>The blog number : {blogFive}</p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

@@ -2,12 +2,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 
-
-interface CounterState {
-    value: number;
+export interface CounterReducer {
+    value: number
 }
 
-const initialState: CounterState = {
+const initialState: CounterReducer = {
     value: 0,
 }
 
