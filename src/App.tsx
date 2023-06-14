@@ -2,10 +2,10 @@
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { useAppDispatch, useAppSelector } from './app/hooks'
-import { amountAdded, decremented, incremented } from './featuers/counter/counterSlice'
+import { amountAdded, counterState, decremented, incremented } from './featuers/counter/counterSlice'
 import './App.css'
 import { useState } from 'react'
-import { incrementBlog } from './featuers/blog/blogSlice'
+import { blocState, incrementBlog } from './featuers/blog/blogSlice'
 
 function App() {
   //*const [count, setCount] = useState(0)
@@ -14,8 +14,8 @@ function App() {
 
 
   // we get the state from redux
-  const count =  useAppSelector((state) => state.counter.value)
-  const blogFive = useAppSelector((state) => state.blog.num) 
+  const count =  useAppSelector(counterState)
+  const blogFive = useAppSelector(blocState)
   const dispatch = useAppDispatch();
 
   const [incrementAmount, setIncrementAmount] = useState('2')
@@ -60,13 +60,13 @@ function App() {
         <div className="input-txt h-8 w-1/2 my-auto mx-2">
           <input type="number" value={incrementAmount} onChange={handleChange} name="" id="" />
         </div>
-        <p>The count is : {count}</p>
+        <p>The count is : {count.value}</p>
         
         <button onClick={handleAmountAdded}>Amount Added</button>
 
         <h1>Blog Reducer</h1>
         <button onClick={addBlogNum}>+ 5</button>
-        <p>The blog number : {blogFive}</p>
+        <p>The blog number : {blogFive.num}</p>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

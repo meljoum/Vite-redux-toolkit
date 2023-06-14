@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
 
 export interface BlogReducer {
@@ -19,6 +20,8 @@ const blogSlice = createSlice({
     }
 
 });
+
+export const blocState = (state: RootState): BlogReducer => state.blog
 
 export const { incrementBlog } = blogSlice.actions;
 

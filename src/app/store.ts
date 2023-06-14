@@ -18,4 +18,4 @@ export interface ReducerState {
 }
 
 export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof RootReducer>;
