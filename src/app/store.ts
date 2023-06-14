@@ -1,11 +1,21 @@
-import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "../featuers/counter/counterSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import counter, { CounterReducer } from "../featuers/counter/counterSlice";
+import blog, { BlogReducer } from "../featuers/blog/blogSlice"
+
+const RootReducer = combineReducers({
+    counter,
+    blog
+})
 
 export const store = configureStore({
-    reducer: {
-        counter: counterReducer,
-    },
+    reducer: RootReducer,
+    devTools: true
 });
+
+export interface ReducerState {
+    counter: CounterReducer;
+    blog: BlogReducer
+}
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
