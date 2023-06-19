@@ -57,6 +57,11 @@ function App() {
     dispatch(incrementBlog());
   }
 
+/*   if(isFetching) {
+    return <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>;
+  } */
+
+
   return (
     <>
       <div>
@@ -87,7 +92,7 @@ function App() {
         <div>
           <h2>Dogs Api - Reducer</h2>
           <h4>Choose num of dogs would you fetch :</h4>
-          <select name="" id="" value={numDogs} onChange={handleChangeNumDogs}>
+          <select value={numDogs} onChange={handleChangeNumDogs}>
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="15">15</option>
@@ -96,26 +101,32 @@ function App() {
             <option value="30">30</option>
           </select>
           <p>Number of dogs fetched : {data.length}</p>
-          <table>
-            <thead>
-              <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Picture</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((breed) => (
-                <tr key={breed.id}>
-                  <td>{breed.id}</td>
-                  <td>{breed.name}</td>
-                  <td>
-                    <img src={breed.image.url} alt={breed.name} width={250} height={250} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className='list_dogs'>
+            {(!isFetching) ?
+              <table>
+                <thead>
+                  <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Picture</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((breed) => (
+                    <tr key={breed.id}>
+                      <td>{breed.id}</td>
+                      <td>{breed.name}</td>
+                      <td>
+                        <img src={breed.image.url} alt={breed.name} width={250} height={250} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table> : 
+              <div className='lds_ellipsis'><div></div><div></div><div></div><div></div></div>
+            }
+          </div>
+          
         </div>
         
     
