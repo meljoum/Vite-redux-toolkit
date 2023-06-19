@@ -57,9 +57,9 @@ function App() {
     dispatch(incrementBlog());
   }
 
-/*   if(isFetching) {
-    return <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>;
-  } */
+  if(isFetching) {
+    return <div className="lds_ellipsis"><div></div><div></div><div></div><div></div></div>;
+  }
 
 
   return (
