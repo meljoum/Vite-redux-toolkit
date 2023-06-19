@@ -48,3 +48,17 @@
 .read-the-docs {
   color: #888;
 }
+
+table {
+  width: 100%;
+  border: 1px solid #000;
+}
+table img{
+  object-fit: cover;
+}
+td, th {
+  padding: 15px;
+  font-size: 17px;
+  font-weight: 400;
+  border: 1px solid #000;
+}
