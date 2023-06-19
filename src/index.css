@@ -61,6 +61,15 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+select {
+  width: 150px;
+  height: 40px;
+  padding: 0 0.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #000;
+  box-shadow: none;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -71,5 +80,12 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  #root {
+    max-width: 100%;
+    padding: 1.2rem;
   }
 }
