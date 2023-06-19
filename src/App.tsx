@@ -20,10 +20,18 @@ function App() {
   const blogFive = useAppSelector(blocState)
   const dispatch = useAppDispatch();
 
-  //It's to use Dogs Api
+  //It's to use Dogs Api - with RTK Query that save all request in cache to don't reload every time
 
-  const { data = [], isFetching } = useFetchBreedsQuery();
+  
+  const [numDogs, setNumDogs] = useState(10);
+  const { data = [], isFetching } = useFetchBreedsQuery(numDogs);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function handleChangeNumDogs(e: any) {
+    setNumDogs(Number(e.target.value))
+  }
+
+  //---------------------------------------------------------------
   const [incrementAmount, setIncrementAmount] = useState('2')
   const incrementValue = Number(incrementAmount) || 0
 
@@ -78,6 +86,15 @@ function App() {
         //* It's for Useing Dogs Api data with Redux
         <div>
           <h2>Dogs Api - Reducer</h2>
+          <h4>Choose num of dogs would you fetch :</h4>
+          <select name="" id="" value={numDogs} onChange={handleChangeNumDogs}>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option value="30">30</option>
+          </select>
           <p>Number of dogs fetched : {data.length}</p>
           <table>
             <thead>
