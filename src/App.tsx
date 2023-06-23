@@ -7,7 +7,8 @@ import './App.css'
 import { useState } from 'react'
 import { blocState, incrementBlog } from './featuers/blog/blogSlice'
 //It's form Dogs Api
-import { useFetchBreedsQuery } from './featuers/dogs-api/dogs_api_slice'
+import { useFetchBreedsQuery, useDeleteDogMutation } from './featuers/dogs-api/dogs_api_slice'
+import { useFetchPokemonQuery } from './featuers/pokemon-api/pokemon_api_slice'
 
 function App() {
   //*const [count, setCount] = useState(0)
@@ -22,15 +23,42 @@ function App() {
 
   //It's to use Dogs Api - with RTK Query that save all request in cache to don't reload every time
 
-  
   const [numDogs, setNumDogs] = useState(10);
-  const { data = [], isFetching } = useFetchBreedsQuery(numDogs);
+  const { data : dogApiData = [], isFetching } = useFetchBreedsQuery(numDogs);
+
+  //It's for Pokemon Api
+
+  /* const [name]*/
+  const { data : pokemoneApiData, error, isLoading: isPokemonLoading } = useFetchPokemonQuery();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function handleChangeNumDogs(e: any) {
     setNumDogs(Number(e.target.value))
   }
 
+  // Delete Dog
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [deleteDog] = useDeleteDogMutation();
+  const dogIdToDelete = 1;
+
+  const handleDelete = async () => {
+    
+    setIsLoading(true);
+
+    deleteDog(dogIdToDelete)
+      .unwrap() // Handle the successful response
+      .then(() => {
+        console.log('Dog deleted successfully');
+      })
+      .catch((error: any) => {
+        console.log('Failed to delete dog:', error);
+        
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
+  }
   //---------------------------------------------------------------
   const [incrementAmount, setIncrementAmount] = useState('2')
   const incrementValue = Number(incrementAmount) || 0
@@ -61,7 +89,8 @@ function App() {
     return <div className="lds_ellipsis"><div></div><div></div><div></div><div></div></div>;
   }
 
-
+  console.log('POKKKK :', pokemoneApiData?.results);
+  console.log('Doooogs :', dogApiData);
   return (
     <div className="container">
       <div>
@@ -100,7 +129,12 @@ function App() {
             <option value="25">25</option>
             <option value="30">30</option>
           </select>
-          <p>Number of dogs fetched : {data.length}</p>
+          <p>Number of dogs fetched : {dogApiData.length}</p>
+
+          <button onClick={handleDelete} disabled={isLoading}>
+            {isLoading ? 'Deleting...': 'Delete Dog'}
+          </button>
+
           <div className='list_dogs'>
             {(!isFetching) ?
               <table>
@@ -112,7 +146,7 @@ function App() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((breed) => (
+                  {dogApiData.map((breed) => (
                     <tr key={breed.id}>
                       <td>{breed.id}</td>
                       <td>{breed.name}</td>
@@ -127,6 +161,40 @@ function App() {
             }
           </div>
           
+          <div className='list_pokemon'>
+            <h3>Liste of pokemon :</h3>
+            <p>Number of pokemon fetched : {pokemoneApiData?.results.length}</p>
+            
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Url</th>
+                </tr>
+              </thead>
+              <tbody>
+                { error ? (
+                    <tr>
+                      <td>Oh no, there was an error</td>
+                    </tr>
+                  ): isPokemonLoading ? (
+                    <tr>
+                      <td>Loading...</td>
+                    </tr>
+                  ): pokemoneApiData?.results ?(
+                      pokemoneApiData.results.map((poke) => (
+                        <tr key={poke.name}>
+                          <td>{poke.name}</td>
+                          <td>{poke.url}</td>
+                        </tr>
+                      )) 
+                  )
+                      
+                : null }
+                  
+              </tbody>
+            </table>
+          </div>
         </div>
         
     

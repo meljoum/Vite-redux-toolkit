@@ -27,13 +27,17 @@ export const dogsApiSlice = createApi({
     endpoints(builder) {
         return {
             fetchBreeds: builder.query<Breed[], number | void> ({
-                query(limit = 12) {
-                    return `/breeds?limit=${limit}`;
-                },
+                query: (limit = 10) => `/breeds?limit=${limit}`,
+            }),
+            deleteDog: builder.mutation<void, number>({
+                query: (dogId) => ({
+                    url: `/breeds/${dogId}`,
+                    method: 'DELETE',
+                }),
             }),
         };
     },
 });
 
 
-export const { useFetchBreedsQuery } = dogsApiSlice;
+export const { useFetchBreedsQuery, useDeleteDogMutation } = dogsApiSlice;
